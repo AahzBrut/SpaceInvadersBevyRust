@@ -3,6 +3,7 @@
 mod constants;
 mod resources;
 mod components;
+mod systems;
 
 use bevy::DefaultPlugins;
 use bevy::diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin};
@@ -10,8 +11,9 @@ use bevy::prelude::*;
 use bevy::window::WindowMode;
 use constants::*;
 use resources::*;
+use crate::components::movement::Movement;
 use crate::components::player::Player;
-use crate::components::player_speed::PlayerSpeed;
+use crate::systems::input_system::input_system;
 
 fn main() {
     App::build()
@@ -27,6 +29,7 @@ fn main() {
         .add_plugin(FrameTimeDiagnosticsPlugin::default())
         .add_startup_system(setup.system())
         .add_startup_stage("game_setup_actors", SystemStage::single(spawn_player.system()))
+        .add_system(input_system.system())
         .run();
 }
 
@@ -34,8 +37,7 @@ fn setup(
     mut commands: Commands,
     asset_server: Res<AssetServer>,
     mut materials: ResMut<Assets<ColorMaterial>>,
-    mut windows: ResMut<Windows>,
-) {
+    mut windows: ResMut<Windows>) {
     // get window handler
     let mut window = windows.get_primary_mut().unwrap();
 
@@ -73,5 +75,5 @@ fn spawn_player(
         ..Default::default()
     })
         .insert(Player)
-        .insert(PlayerSpeed::default());
+        .insert(Movement::default());
 }
