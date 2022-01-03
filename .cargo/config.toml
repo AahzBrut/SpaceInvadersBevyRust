@@ -1,2 +1,6 @@
 [target.x86_64-pc-windows-msvc]
-rustflags = ["-Zshare-generics=off"]
+linker = "rust-lld.exe"
+rustflags = ["-Zshare-generics=n"]
+
+#[profile.dev]
+#debug = 1

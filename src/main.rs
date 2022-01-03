@@ -1,19 +1,15 @@
 #![allow(unused)]
 
 mod constants;
+mod resources;
+mod components;
 
 use bevy::DefaultPlugins;
+use bevy::diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin};
 use bevy::prelude::*;
+use bevy::window::WindowMode;
 use constants::*;
-
-pub struct Materials {
-    player_materials: Handle<ColorMaterial>
-}
-
-struct WinSize{
-    width: f32,
-    height: f32
-}
+use resources::*;
 
 fn main() {
     App::build()
@@ -25,6 +21,8 @@ fn main() {
             ..Default::default()
         })
         .add_plugins(DefaultPlugins)
+        .add_plugin(LogDiagnosticsPlugin::default())
+        .add_plugin(FrameTimeDiagnosticsPlugin::default())
         .add_startup_system(setup.system())
         .add_startup_stage("game_setup_actors", SystemStage::single(spawn_player.system()))
         .run();
