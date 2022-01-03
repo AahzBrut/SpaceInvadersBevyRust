@@ -1,11 +1,10 @@
 #![allow(unused)]
 
+mod constants;
+
 use bevy::DefaultPlugins;
 use bevy::prelude::*;
-
-const PLAYER_SPRITE: &str = "./player/player.png";
-const SPRITE_SIZE: f32 = 256.0;
-const SCALE: f32 = 0.125;
+use constants::*;
 
 pub struct Materials {
     player_materials: Handle<ColorMaterial>
