@@ -10,14 +10,16 @@ use bevy::prelude::*;
 use bevy::window::WindowMode;
 use constants::*;
 use resources::*;
+use crate::components::player::Player;
+use crate::components::player_speed::PlayerSpeed;
 
 fn main() {
     App::build()
         .insert_resource(ClearColor(Color::rgb(0.04, 0.04, 0.04)))
         .insert_resource(WindowDescriptor {
             title: "Space Invaders!".to_string(),
-            width: 598.0,
-            height: 376.0,
+            width: 640.0,
+            height: 480.0,
             ..Default::default()
         })
         .add_plugins(DefaultPlugins)
@@ -41,25 +43,25 @@ fn setup(
     commands.spawn_bundle(OrthographicCameraBundle::new_2d());
 
     // load resources
-    commands.insert_resource(Materials{
+    commands.insert_resource(Materials {
         player_materials: materials.add(asset_server.load(PLAYER_SPRITE).into())
     });
 
     // store window size
-    commands.insert_resource(WinSize{
+    commands.insert_resource(WinSize {
         width: window.width(),
-        height: window.height()
+        height: window.height(),
     });
 
     // position window
     let mut window = windows.get_primary_mut().unwrap();
-    window.set_position(IVec2::new(1000, 0));
+    window.set_position(IVec2::new(945, 0));
 }
 
 fn spawn_player(
     mut commands: Commands,
     materials: Res<Materials>,
-    win_size: Res<WinSize>
+    win_size: Res<WinSize>,
 ) {
     commands.spawn_bundle(SpriteBundle {
         material: materials.player_materials.clone(),
@@ -69,5 +71,7 @@ fn spawn_player(
             ..Default::default()
         },
         ..Default::default()
-    });
+    })
+        .insert(Player)
+        .insert(PlayerSpeed::default());
 }
