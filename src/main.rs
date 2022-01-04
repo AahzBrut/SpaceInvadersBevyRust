@@ -11,9 +11,12 @@ use bevy::prelude::*;
 use bevy::window::WindowMode;
 use constants::*;
 use resources::*;
+use crate::components::control::Control;
 use crate::components::movement::Movement;
 use crate::components::player::Player;
+use crate::systems::control_system::control_system;
 use crate::systems::input_system::input_system;
+use crate::systems::movement_system::movement_system;
 
 fn main() {
     App::build()
@@ -30,6 +33,8 @@ fn main() {
         .add_startup_system(setup.system())
         .add_startup_stage("game_setup_actors", SystemStage::single(spawn_player.system()))
         .add_system(input_system.system())
+        .add_system(control_system.system())
+        .add_system(movement_system.system())
         .run();
 }
 
@@ -75,5 +80,10 @@ fn spawn_player(
         ..Default::default()
     })
         .insert(Player)
-        .insert(Movement::default());
+        .insert(Movement{
+            max_velocity: Vec2::new(100.0, 100.0),
+            max_acceleration: Vec2::new(100.0, 100.0),
+            ..Default::default()
+        })
+        .insert(Control::default());
 }
