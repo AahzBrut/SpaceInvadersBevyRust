@@ -14,9 +14,11 @@ use resources::*;
 use crate::components::control::Control;
 use crate::components::movement::Movement;
 use crate::components::player::Player;
+use crate::components::weapon::Weapon;
 use crate::systems::control_system::control_system;
 use crate::systems::input_system::input_system;
 use crate::systems::movement_system::movement_system;
+use crate::systems::weapon_system::weapon_system;
 
 fn main() {
     App::build()
@@ -29,12 +31,13 @@ fn main() {
         })
         .add_plugins(DefaultPlugins)
         .add_plugin(LogDiagnosticsPlugin::default())
-        .add_plugin(FrameTimeDiagnosticsPlugin::default())
+//        .add_plugin(FrameTimeDiagnosticsPlugin::default())
         .add_startup_system(setup.system())
         .add_startup_stage("game_setup_actors", SystemStage::single(spawn_player.system()))
         .add_system(input_system.system())
         .add_system(control_system.system())
         .add_system(movement_system.system())
+        .add_system(weapon_system.system())
         .run();
 }
 
@@ -85,5 +88,14 @@ fn spawn_player(
             max_acceleration: Vec2::new(100.0, 100.0),
             ..Default::default()
         })
-        .insert(Control::default());
+        .insert(Control::default())
+        .with_children(|parent|{
+            parent
+                .spawn()
+                .insert(Weapon{
+                    muzzle_point: Vec2::new(0.5 + SPRITE_SIZE * SCALE, 0.5 + SPRITE_SIZE * SCALE),
+                    rate_of_fire: 0.5,
+                    ..Default::default()
+                });
+        });
 }
