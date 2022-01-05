@@ -54,7 +54,8 @@ fn setup(
 
     // load resources
     commands.insert_resource(Materials {
-        player_materials: materials.add(asset_server.load(PLAYER_SPRITE).into())
+        player_materials: materials.add(asset_server.load(PLAYER_SPRITE).into()),
+        projectile_materials: materials.add(asset_server.load(PROJECTILE_SPRITE).into()),
     });
 
     // store window size
@@ -93,7 +94,7 @@ fn spawn_player(
             parent
                 .spawn()
                 .insert(Weapon{
-                    muzzle_point: Vec2::new(0.5 + SPRITE_SIZE * SCALE, 0.5 + SPRITE_SIZE * SCALE),
+                    muzzle_point: Vec2::new(0.0, SPRITE_SIZE * SCALE * 0.75),
                     rate_of_fire: 0.5,
                     ..Default::default()
                 });

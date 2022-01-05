@@ -8,5 +8,6 @@ pub fn movement_system(
 ){
     for (mut transform, movement) in query.iter_mut(){
         transform.translation.x += movement.velocity.x * time.delta_seconds();
+        transform.translation.y += movement.velocity.y * time.delta_seconds();
     }
 }
