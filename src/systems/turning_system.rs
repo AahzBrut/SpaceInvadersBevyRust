@@ -6,11 +6,11 @@ pub fn turning_system(
     mut query: Query<(&mut Handle<ColorMaterial>, &Movement), With<Player>>,
 ) {
     for (mut sprite, movement) in query.iter_mut() {
-        animate_turn(&mut sprite, movement, &materials);
+        animate_turn(sprite, movement, &materials);
     }
 }
 
-fn animate_turn(sprite: &mut Handle<ColorMaterial>, movement: &Movement, materials: &Res<Materials>) {
+fn animate_turn(mut sprite: Mut<Handle<ColorMaterial>>, movement: &Movement, materials: &Res<Materials>) {
     let num_stages = materials.player_turn_left_frames.len() as f32 - 1.0;
     let stage = if movement.acceleration.x == 0.0 {0} else {(num_stages * (movement.acceleration.x.abs() / movement.max_acceleration.x)) as usize};
     if movement.acceleration.x > 0.0 {
