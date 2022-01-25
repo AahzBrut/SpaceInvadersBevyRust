@@ -1,11 +1,11 @@
-use bevy::prelude::Vec2;
+use bevy::prelude::{Vec2, Component};
 
 #[derive(Debug)]
 pub enum ProjectileType{
     LASER
 }
 
-#[derive(Debug)]
+#[derive(Debug, Component)]
 pub struct Weapon {
     pub muzzle_point: Vec2,
     pub rate_of_fire: f32,

@@ -2,10 +2,10 @@ use bevy::prelude::*;
 
 // game resources
 pub struct Materials {
-    pub player_materials: Handle<ColorMaterial>,
-    pub projectile_materials: Handle<ColorMaterial>,
-    pub player_turn_left_frames: Vec<Handle<ColorMaterial>>,
-    pub player_turn_right_frames: Vec<Handle<ColorMaterial>>,
+    pub player_materials: Handle<Image>,
+    pub projectile_materials: Handle<Image>,
+    pub player_turn_left_frames: Vec<Handle<Image>>,
+    pub player_turn_right_frames: Vec<Handle<Image>>,
 }
 
 // window size

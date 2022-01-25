@@ -1,5 +1,5 @@
 use bevy::prelude::{Mut, Query, Res, Time, With};
-use crate::{Control, Movement};
+use crate::components::*;
 
 pub fn control_system(
     time: Res<Time>,

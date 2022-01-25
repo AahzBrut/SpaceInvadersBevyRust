@@ -1,4 +1,6 @@
-#[derive(Debug)]
+use bevy::prelude::Component;
+
+#[derive(Debug, Component)]
 pub struct Control {
     pub turn_left: bool,
     pub turn_right: bool,

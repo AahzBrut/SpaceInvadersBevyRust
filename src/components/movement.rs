@@ -1,6 +1,6 @@
-use bevy::prelude::{Vec2, Vec3};
+use bevy::prelude::{Component, Vec2, Vec3};
 
-#[derive(Debug)]
+#[derive(Debug, Component)]
 pub struct Movement{
     pub max_velocity: Vec2,
     pub max_acceleration: Vec2,

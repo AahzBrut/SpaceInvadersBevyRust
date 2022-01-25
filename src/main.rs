@@ -11,10 +11,7 @@ use bevy::prelude::*;
 use bevy::window::WindowMode;
 use constants::*;
 use resources::*;
-use crate::components::control::Control;
-use crate::components::movement::Movement;
-use crate::components::player::Player;
-use crate::components::weapon::Weapon;
+use crate::components::*;
 use crate::systems::control_system::control_system;
 use crate::systems::input_system::input_system;
 use crate::systems::movement_system::movement_system;
@@ -22,7 +19,7 @@ use crate::systems::turning_system::turning_system;
 use crate::systems::weapon_system::weapon_system;
 
 fn main() {
-    App::build()
+    App::new()
         .insert_resource(Msaa { samples: 4 })
         .insert_resource(ClearColor(Color::rgb(0.04, 0.04, 0.04)))
         .insert_resource(WindowDescriptor {
@@ -47,7 +44,6 @@ fn main() {
 fn setup(
     mut commands: Commands,
     asset_server: Res<AssetServer>,
-    mut materials: ResMut<Assets<ColorMaterial>>,
     mut windows: ResMut<Windows>) {
     // get window handler
     let mut window = windows.get_primary_mut().unwrap();
@@ -57,10 +53,10 @@ fn setup(
 
     // load resources
     commands.insert_resource(Materials {
-        player_materials: materials.add(asset_server.load(PLAYER_SPRITE).into()),
-        projectile_materials: materials.add(asset_server.load(PROJECTILE_SPRITE).into()),
-        player_turn_left_frames: load_animations(PLAYER_TURN_LEFT, 9, &mut materials, &asset_server),
-        player_turn_right_frames: load_animations(PLAYER_TURN_RIGHT, 9, &mut materials, &asset_server),
+        player_materials: asset_server.load(PLAYER_SPRITE).into(),
+        projectile_materials: asset_server.load(PROJECTILE_SPRITE).into(),
+        player_turn_left_frames: load_animations(PLAYER_TURN_LEFT, 9, &asset_server),
+        player_turn_right_frames: load_animations(PLAYER_TURN_RIGHT, 9, &asset_server),
     });
 
     // store window size
@@ -74,11 +70,11 @@ fn setup(
     window.set_position(IVec2::new(945, 0));
 }
 
-fn load_animations(base_path: &str, num_frames: usize, materials: &mut ResMut<Assets<ColorMaterial>>, asset_server: &Res<AssetServer>) -> Vec<Handle<ColorMaterial>> {
-    let mut frames: Vec<Handle<ColorMaterial>> = Vec::new();
+fn load_animations(base_path: &str, num_frames: usize, asset_server: &Res<AssetServer>) -> Vec<Handle<Image>> {
+    let mut frames: Vec<Handle<Image>> = Vec::new();
     for index in 0..num_frames {
         let frame_path = format!("{}_{:02}.png", base_path, index);
-        frames.push(materials.add(asset_server.load(frame_path.as_str()).into()));
+        frames.push(asset_server.load(frame_path.as_str()).into());
     }
     frames
 }
@@ -89,7 +85,7 @@ fn spawn_player(
     win_size: Res<WinSize>,
 ) {
     commands.spawn_bundle(SpriteBundle {
-        material: materials.player_materials.clone(),
+        texture: materials.player_materials.clone(),
         transform: Transform {
             translation: Vec3::new(0.0, -win_size.height * 0.5 + SPRITE_SIZE * SCALE, 10.0),
             scale: Vec3::new(SCALE, SCALE, SCALE),

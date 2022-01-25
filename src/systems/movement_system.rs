@@ -1,6 +1,6 @@
 use bevy::prelude::{Query, Res, Time, Transform, With};
 
-use crate::{Control, Movement};
+use crate::components::*;
 
 pub fn movement_system(
     time: Res<Time>,

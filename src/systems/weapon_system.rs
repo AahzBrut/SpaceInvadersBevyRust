@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 
-use crate::{Control, Materials, Movement, SCALE, Weapon};
-use crate::components::projectile::Projectile;
+use crate::{Materials, SCALE};
+use crate::components::*;
 
 pub fn weapon_system(
     mut commands: Commands,
@@ -30,7 +30,6 @@ fn fire_projectile(commands: &mut Commands, materials: &Res<Materials>, transfor
     commands
         .spawn_bundle(
             SpriteBundle {
-                material: materials.projectile_materials.clone(),
                 transform: Transform {
                     translation: Vec3::new(pos_x, pos_y, 1.0),
                     scale: Vec3::new(SCALE, SCALE, SCALE),

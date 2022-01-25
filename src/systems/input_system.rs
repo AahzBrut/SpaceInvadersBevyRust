@@ -1,5 +1,5 @@
 use bevy::prelude::{Input, KeyCode, Query, Res, Time, Transform, Vec2, With};
-use crate::{Control, Movement, Player};
+use crate::components::*;
 
 pub fn input_system(
     keyboard_input: Res<Input<KeyCode>>,
