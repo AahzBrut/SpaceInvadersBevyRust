@@ -30,6 +30,7 @@ fn fire_projectile(commands: &mut Commands, materials: &Res<Materials>, transfor
     commands
         .spawn_bundle(
             SpriteBundle {
+                texture: materials.projectile_materials.clone(),
                 transform: Transform {
                     translation: Vec3::new(pos_x, pos_y, 1.0),
                     scale: Vec3::new(SCALE, SCALE, SCALE),

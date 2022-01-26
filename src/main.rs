@@ -12,11 +12,7 @@ use bevy::window::WindowMode;
 use constants::*;
 use resources::*;
 use crate::components::*;
-use crate::systems::control_system::control_system;
-use crate::systems::input_system::input_system;
-use crate::systems::movement_system::movement_system;
-use crate::systems::turning_system::turning_system;
-use crate::systems::weapon_system::weapon_system;
+use crate::systems::*;
 
 fn main() {
     App::new()
@@ -31,13 +27,13 @@ fn main() {
         .add_plugins(DefaultPlugins)
         .add_plugin(LogDiagnosticsPlugin::default())
 //        .add_plugin(FrameTimeDiagnosticsPlugin::default())
-        .add_startup_system(setup.system())
-        .add_startup_stage("game_setup_actors", SystemStage::single(spawn_player.system()))
-        .add_system(input_system.system())
-        .add_system(control_system.system())
-        .add_system(movement_system.system())
-        .add_system(weapon_system.system())
-        .add_system(turning_system.system())
+        .add_startup_system(setup)
+        .add_startup_stage("game_setup_actors", SystemStage::single(spawn_player))
+        .add_system(input_system)
+        .add_system(control_system)
+        .add_system(movement_system)
+        .add_system(weapon_system)
+        .add_system(turning_system)
         .run();
 }
 
