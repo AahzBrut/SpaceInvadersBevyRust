@@ -19,7 +19,7 @@ impl Default for Weapon {
         Self{
             muzzle_point: Vec2::new(0.0, 0.0),
             rate_of_fire: 0.0,
-            projectile_velocity: 100.0,
+            projectile_velocity: 200.0,
             time_since_last_fire: f32::MAX,
             projectile_type: ProjectileType::LASER,
         }
